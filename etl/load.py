@@ -1,16 +1,14 @@
-import os
 from pymongo import MongoClient
-from dotenv import load_dotenv
+from .logger_config import setup_logger
 
-load_dotenv()
+logger = setup_logger(__name__)
 
-MONGO_URI = os.getenv("MONGO_URI")
-DB_NAME = os.getenv("DB_NAME")
-COLLECTION_NAME = os.getenv("COLLECTION_NAME")
+def load(df, db_name, collection_name):
+    logger.info(f"Conectando ao MongoDB - Banco: {db_name}, Coleção: {collection_name}")
+    client = MongoClient("mongodb://localhost:27017/")
+    db = client[db_name]
+    collection = db[collection_name]
 
-def load(df):
-    client = MongoClient(MONGO_URI)
-    db = client[DB_NAME]
-    collection = db[COLLECTION_NAME]
-    collection.insert_many(df.to_dict(orient="records"))
-    print(f"{len(df)} registros inseridos no MongoDB.")
+    data = df.to_dict(orient="records")
+    result = collection.insert_many(data)
+    logger.info(f"{len(result.inserted_ids)} registros inseridos no MongoDB")
