@@ -1,0 +1,6 @@
+id_transacao,cliente,valor,local,risco
+1,João,15000,SP,baixo
+2,Ana,75000,RJ,alto
+3,Dandara,5000,MG,médio
+4,Carlos,120000,SP,alto
+5,Felipe,30000,BA,médio
