@@ -1,4 +1,10 @@
 import pandas as pd
+from .logger_config import setup_logger
 
-def extract(path: str) -> pd.DataFrame:
-    return pd.read_csv(path)
+logger = setup_logger(__name__)
+
+def extract(filepath):
+    logger.info(f"Extraindo dados do arquivo: {filepath}")
+    df = pd.read_csv(filepath)
+    logger.info(f"{len(df)} registros extraídos")
+    return df
